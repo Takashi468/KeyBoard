@@ -1,0 +1,36 @@
+﻿<Window
+    x:Class="Keyboard.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Keyboard"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Grid>
+        <TextBox
+            x:Name="TextBox_Username"
+            Height="144"
+            Margin="10,145,10,145"
+            Padding="60,0,20,0"
+            HorizontalContentAlignment="Left"
+            VerticalContentAlignment="Center"
+            Panel.ZIndex="1"
+            BorderThickness="0"
+            CaretBrush="{x:Null}"
+            FontSize="70"
+            Foreground="Black"
+            GotFocus="TextBox_Username_GotFocus"
+            LostFocus="TextBox_Username_LostFocus"
+            SelectionTextBrush="Red"
+            Text="555"
+            TextAlignment="Left"
+            TextChanged="TextBox_Username_TextChanged">
+            <TextBox.SelectionBrush>
+                <SolidColorBrush Opacity="0.5" Color="#FFA7A7A7" />
+            </TextBox.SelectionBrush>
+        </TextBox>
+    </Grid>
+</Window>
