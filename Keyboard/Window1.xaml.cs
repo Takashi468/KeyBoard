@@ -20,6 +20,17 @@ namespace Keyboard
         private Button shiftButton;
         private Button capsLockButton;
 
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var screenHeight = SystemParameters.PrimaryScreenHeight;
+            var screenWidth = SystemParameters.PrimaryScreenWidth;
+
+            this.Left = 0;
+            this.Top = screenHeight - this.Height; // ชิดขอบล่างของหน้าจอ
+        }
+
+
         // Map สัญลักษณ์เมื่อกด Shift
         private readonly Dictionary<string, string> shiftSymbols = new()
         {
@@ -137,7 +148,7 @@ namespace Keyboard
             {
                 RoutedEvent = System.Windows.Input.Keyboard.KeyDownEvent
             };
-            Debug.WriteLine("Send");
+            Debug.WriteLine(e);
         }
 
         public class KeyboardKey

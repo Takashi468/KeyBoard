@@ -1,0 +1,99 @@
+<Window
+    x:Class="Keyboard.View.KeyboardTest1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:Keyboard.ViewModels"
+    mc:Ignorable="d"
+    Title="KeyboardTest1"
+    Width="1080"
+    Height="450"
+    ResizeMode="NoResize"
+    WindowStyle="None">
+
+    <Window.Resources>
+        <Style x:Key="KeyboardButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Background" Value="#F2F2F2" />
+            <Setter Property="BorderBrush" Value="#DDDDDD" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="#222" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DataTemplate x:Key="DualSymbolButtonTemplate">
+            <Button
+                Command="{Binding DataContext.KeyPressCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                CommandParameter="{Binding Tag}"
+                Style="{StaticResource KeyboardButtonStyle}"
+                Tag="{Binding Tag}">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock HorizontalAlignment="Center" FontSize="12" Text="{Binding Shifted}" />
+                    <TextBlock HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Text="{Binding Normal}" />
+                </StackPanel>
+            </Button>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SimpleButtonTemplate">
+            <Button
+                Command="{Binding DataContext.KeyPressCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                CommandParameter="{Binding Normal}"
+                Content="{Binding Normal}"
+                Style="{StaticResource KeyboardButtonStyle}" />
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Viewbox Stretch="Uniform">
+            <StackPanel Margin="10" Orientation="Vertical">
+                <ItemsControl Margin="0,4"
+                              ItemTemplate="{StaticResource DualSymbolButtonTemplate}"
+                              ItemsSource="{Binding NumberRowKeys}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+
+                <ItemsControl Margin="0,4"
+                              ItemTemplate="{StaticResource SimpleButtonTemplate}"
+                              ItemsSource="{Binding QwertyRowKeys}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+
+                <ItemsControl Margin="0,4"
+                              ItemTemplate="{StaticResource SimpleButtonTemplate}"
+                              ItemsSource="{Binding ControlRowKeys}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </StackPanel>
+        </Viewbox>
+    </Grid>
+</Window>

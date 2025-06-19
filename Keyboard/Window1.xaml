@@ -8,11 +8,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Keyboard"
     Width="1080"
-    Height="450"
+    Height="300"
     Background="White"
     ResizeMode="NoResize"
     WindowStyle="None"
-    mc:Ignorable="d">
+    Topmost="True"
+    ShowInTaskbar="False"
+    AllowsTransparency="False"
+    mc:Ignorable="d"
+    Loaded="Window_Loaded">
 
     <Window.Resources>
         <Style x:Key="KeyboardButtonStyle" TargetType="Button">
@@ -58,10 +62,12 @@
                         Tag="`">
                         <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
                             <TextBlock
+                                x:Name="ShiftText"
                                 HorizontalAlignment="Center"
                                 FontSize="12"
                                 Text="~" />
                             <TextBlock
+                                x:Name="NormalText"
                                 HorizontalAlignment="Center"
                                 FontSize="16"
                                 FontWeight="Bold"
@@ -243,7 +249,7 @@
 
                     <Button
                         Grid.Column="0"
-                        Width="66"
+                        Width="60"
                         Click="Tab_Click"
                         Content="Tab"
                         Style="{StaticResource KeyboardButtonStyle}" />
@@ -340,178 +346,356 @@
 
 
                 <!--  แถว CapsLock  -->
-                <StackPanel Orientation="Horizontal">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <!--  Caps  -->
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <!--  Enter  -->
+                    </Grid.ColumnDefinitions>
+
                     <Button
-                        Width="60"
+                        Grid.Column="0"
+                        Width="75"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="CapsLock_Click"
                         Content="Caps"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="1"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="a"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="2"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="s"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="3"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="d"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="4"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="f"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="5"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="g"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="6"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="h"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="7"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="j"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="8"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="k"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="9"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="l"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
+                        Grid.Column="10"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Style="{StaticResource KeyboardButtonStyle}"
                         Tag=":">
                         <StackPanel Orientation="Vertical">
-                            <TextBlock FontSize="12" Text=";" />
+                            <TextBlock
+                                FontSize="12"
+                                Text=";"
+                                TextAlignment="Center" />
                             <TextBlock
                                 FontSize="16"
                                 FontWeight="Bold"
-                                Text=":" />
+                                Text=":"
+                                TextAlignment="Center" />
                         </StackPanel>
                     </Button>
+
                     <Button
+                        Grid.Column="11"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Style="{StaticResource KeyboardButtonStyle}"
                         Tag="&quot;">
                         <StackPanel Orientation="Vertical">
-                            <TextBlock FontSize="12" Text="'" />
+                            <TextBlock
+                                FontSize="12"
+                                Text="'"
+                                TextAlignment="Center" />
                             <TextBlock
                                 FontSize="16"
                                 FontWeight="Bold"
-                                Text="&quot;" />
+                                Text="&quot;"
+                                TextAlignment="Center" />
                         </StackPanel>
                     </Button>
+
                     <Button
-                        Width="80"
+                        Grid.Column="12"
+                        Width="75"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Enter_Click"
                         Content="Enter"
                         Style="{StaticResource KeyboardButtonStyle}" />
-                </StackPanel>
+                </Grid>
+
+
+
 
                 <!--  แถว Shift และ Space  -->
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <!--  Shift  -->
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
                     <Button
-                        Width="80"
+                        Grid.Column="0"
+                        Width="75"
+                        Margin="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Stretch"
                         Click="Shift_Click"
                         Content="Shift"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="1"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="z"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="2"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="x"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="3"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="c"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="4"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="v"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="5"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="b"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="6"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="n"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
-                        Width="40"
+                        Grid.Column="7"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Content="m"
                         Style="{StaticResource KeyboardButtonStyle}" />
+
                     <Button
+                        Grid.Column="8"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Style="{StaticResource KeyboardButtonStyle}"
                         Tag=",">
                         <StackPanel Orientation="Vertical">
-                            <TextBlock FontSize="12" Text="&lt;" />
+                            <TextBlock
+                                FontSize="12"
+                                Text="&lt;"
+                                TextAlignment="Center" />
                             <TextBlock
                                 FontSize="16"
                                 FontWeight="Bold"
-                                Text="," />
+                                Text=","
+                                TextAlignment="Center" />
                         </StackPanel>
                     </Button>
+
                     <Button
+                        Grid.Column="9"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Style="{StaticResource KeyboardButtonStyle}"
                         Tag=".">
                         <StackPanel Orientation="Vertical">
-                            <TextBlock FontSize="12" Text="&gt;" />
+                            <TextBlock
+                                FontSize="12"
+                                Text="&gt;"
+                                TextAlignment="Center" />
                             <TextBlock
                                 FontSize="16"
                                 FontWeight="Bold"
-                                Text="." />
+                                Text="."
+                                TextAlignment="Center" />
                         </StackPanel>
                     </Button>
+
                     <Button
+                        Grid.Column="10"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
                         Click="Key_Click"
                         Style="{StaticResource KeyboardButtonStyle}"
                         Tag="/">
                         <StackPanel Orientation="Vertical">
-                            <TextBlock FontSize="12" Text="?" />
+                            <TextBlock
+                                FontSize="12"
+                                Text="?"
+                                TextAlignment="Center" />
                             <TextBlock
                                 FontSize="16"
                                 FontWeight="Bold"
-                                Text="/" />
+                                Text="/"
+                                TextAlignment="Center" />
                         </StackPanel>
                     </Button>
-                </StackPanel>
+
+                    <Button
+                        Grid.Column="11"
+                        Width="75"
+                        Margin="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Stretch"
+                        Click="Shift_Click"
+                        Content="Shift"
+                        Style="{StaticResource KeyboardButtonStyle}" />
+                </Grid>
+
 
                 <!--  แถว SpaceBar  -->
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <Grid>
-                        <Button
-                            Width="300"
-                            Click="Space_Click"
-                            Content="Space"
-                            Style="{StaticResource KeyboardButtonStyle}" />
-                    </Grid>
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <!--  เต็มแถว  -->
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        Grid.Column="0"
+                        Width="Auto"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Click="Space_Click"
+                        Content="Space"
+                        Style="{StaticResource KeyboardButtonStyle}" />
+                </Grid>
+
             </StackPanel>
         </Viewbox>
     </Grid>

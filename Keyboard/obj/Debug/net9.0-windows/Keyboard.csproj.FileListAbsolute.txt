@@ -5,11 +5,13 @@ C:\Users\Russell\source\repos\Keyboard\Keyboard\bin\Debug\net9.0-windows\Keyboar
 C:\Users\Russell\source\repos\Keyboard\Keyboard\bin\Debug\net9.0-windows\Keyboard.pdb
 C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\Window1.baml
 C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\MainWindow.g.cs
+C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\View\KeyboardTest1.g.cs
 C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\Window1.g.cs
 C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\App.g.cs
 C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\Keyboard_MarkupCompile.cache
 C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\Keyboard_MarkupCompile.lref
 C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\MainWindow.baml
+C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\View\KeyboardTest1.baml
 C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\Keyboard.g.resources
 C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\Keyboard.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\Keyboard.AssemblyInfoInputs.cache
