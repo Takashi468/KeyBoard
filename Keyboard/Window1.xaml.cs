@@ -4,15 +4,25 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Keyboard
 {
     public partial class Window1 : Window
-
     {
-        public static Control TargetControl; // ใช้ร่วมได้ทั้ง TextBox และ PasswordBox
-        private readonly List<KeyboardKey> allKeys = new();
+        [DllImport("user32.dll")]
+        private static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState,
+            [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
 
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetKeyboardLayout(uint idThread);
+
+        [DllImport("user32.dll")]
+        private static extern uint MapVirtualKey(uint uCode, uint uMapType);
+
+        public static Control TargetControl;
+        private readonly List<KeyboardKey> allKeys = new();
 
         private bool isShift = false;
         private bool isCapsLock = false;
@@ -20,31 +30,52 @@ namespace Keyboard
         private Button shiftButton;
         private Button capsLockButton;
 
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            var screenHeight = SystemParameters.PrimaryScreenHeight;
-            var screenWidth = SystemParameters.PrimaryScreenWidth;
-
-            this.Left = 0;
-            this.Top = screenHeight - this.Height; // ชิดขอบล่างของหน้าจอ
-        }
-
-
-        // Map สัญลักษณ์เมื่อกด Shift
-        private readonly Dictionary<string, string> shiftSymbols = new()
-        {
-            { "1", "!" }, { "2", "@" }, { "3", "#" }, { "4", "$" }, { "5", "%" },
-            { "6", "^" }, { "7", "&" }, { "8", "*" }, { "9", "(" }, { "0", ")" },
-            { "`", "~" }, { "-", "_" }, { "=", "+" }, { "[", "{" }, { "]", "}" },
-            { "\\", "|" }, { ";", ":" }, { "'", "\"" }, { ",", "<" }, { ".", ">" },
-            { "/", "?" }
-        };
-
         public Window1()
         {
             InitializeComponent();
             RegisterKeys();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var screenHeight = SystemParameters.PrimaryScreenHeight;
+            this.Left = 0;
+            this.Top = screenHeight - this.Height;
+        }
+
+        private string TranslateKey(string keyChar, bool shiftPressed)
+        {
+            if (string.IsNullOrEmpty(keyChar) || keyChar.Length != 1)
+                return keyChar;
+
+            int virtualKey;
+
+            if (char.IsLetter(keyChar[0]))
+            {
+                try
+                {
+                    Key key = (Key)Enum.Parse(typeof(Key), keyChar.ToUpper());
+                    virtualKey = KeyInterop.VirtualKeyFromKey(key);
+                }
+                catch
+                {
+                    return keyChar;
+                }
+            }
+            else
+            {
+                virtualKey = (byte)keyChar[0];
+            }
+
+            byte[] keyboardState = new byte[256];
+            if (shiftPressed)
+                keyboardState[(int)Key.LeftShift] = 0x80;
+
+            uint scanCode = MapVirtualKey((uint)virtualKey, 0);
+            StringBuilder sb = new StringBuilder(5);
+            ToUnicodeEx((uint)virtualKey, scanCode, keyboardState, sb, sb.Capacity, 0, GetKeyboardLayout(0));
+
+            return sb.ToString();
         }
 
         private void Key_Click(object sender, RoutedEventArgs e)
@@ -55,27 +86,17 @@ namespace Keyboard
             string key = btn.Tag?.ToString() ?? btn.Content?.ToString();
             if (string.IsNullOrEmpty(key)) return;
 
-            // ตรวจสอบว่าคือตัวอักษร
-            if (key.Length == 1 && char.IsLetter(key[0]))
-            {
-                key = (isCapsLock ^ isShift) ? key.ToUpper() : key.ToLower();
-            }
-            else if (isShift && shiftSymbols.ContainsKey(key))
-            {
-                key = shiftSymbols[key];
-            }
+            key = TranslateKey(key, isShift || (isCapsLock && char.IsLetter(key[0])));
 
             InsertText(key);
 
-            // ปิด Shift หลังใช้
             if (isShift)
             {
                 isShift = false;
                 if (shiftButton != null)
                     shiftButton.Background = (Brush)new BrushConverter().ConvertFrom("#F2F2F2");
+                UpdateKeyVisuals();
             }
-
-            
         }
 
         private void InsertText(string key)
@@ -123,24 +144,6 @@ namespace Keyboard
             InsertText(" ");
         }
 
-        //private void Shift_Click(object sender, RoutedEventArgs e)
-        //{
-        //    isShift = !isShift;
-        //    shiftButton = sender as Button;
-        //    shiftButton.Background = isShift
-        //        ? Brushes.LightBlue
-        //        : (Brush)new BrushConverter().ConvertFrom("#F2F2F2");
-        //}
-
-        //private void CapsLock_Click(object sender, RoutedEventArgs e)
-        //{
-        //    isCapsLock = !isCapsLock;
-        //    capsLockButton = sender as Button;
-        //    capsLockButton.Background = isCapsLock
-        //        ? Brushes.LightBlue
-        //        : (Brush)new BrushConverter().ConvertFrom("#F2F2F2");
-        //}
-
         private void SendKey(Key key)
         {
             var target = System.Windows.Input.Keyboard.FocusedElement;
@@ -154,10 +157,9 @@ namespace Keyboard
         public class KeyboardKey
         {
             public Button Button { get; set; }
-            public string Normal { get; set; }    // ตัวอักษรปกติ เช่น a
-            public string Shifted { get; set; }   // ตัวอักษรที่เปลี่ยนเมื่อ Shift เช่น A หรือ @
+            public string Normal { get; set; }
+            public string Shifted { get; set; }
         }
-
 
         private void UpdateKeyVisuals()
         {
@@ -165,23 +167,16 @@ namespace Keyboard
             {
                 if (child.Content is string str && str.Length == 1 && char.IsLetter(str[0]))
                 {
-                    // ปุ่มแบบ Content="a"
-                    child.Content = (isCapsLock ^ isShift)
-                        ? str.ToUpper()
-                        : str.ToLower();
+                    child.Content = (isCapsLock ^ isShift) ? str.ToUpper() : str.ToLower();
                 }
                 else if (child.Content is StackPanel panel)
                 {
                     string key = child.Tag?.ToString();
 
-                    // ถ้าเป็น key เดี่ยว เช่น '1', ';' เป็นต้น
                     if (!string.IsNullOrEmpty(key))
                     {
-                        string mainSymbol = (isShift && shiftSymbols.ContainsKey(key))
-                            ? shiftSymbols[key]
-                            : key;
+                        string mainSymbol = TranslateKey(key, isShift || (isCapsLock && char.IsLetter(key[0])));
 
-                        // หา TextBlock ที่มี FontSize ใหญ่ (ตัวหลัก)
                         foreach (var item in panel.Children)
                         {
                             if (item is TextBlock tb && tb.FontSize >= 16)
@@ -215,7 +210,6 @@ namespace Keyboard
             }
         }
 
-
         private void RegisterKeys()
         {
             foreach (var child in LogicalTreeHelper.GetChildren(this))
@@ -246,7 +240,6 @@ namespace Keyboard
             }
         }
 
-
         private void Shift_Click(object sender, RoutedEventArgs e)
         {
             isShift = !isShift;
@@ -255,7 +248,7 @@ namespace Keyboard
                 ? Brushes.LightBlue
                 : (Brush)new BrushConverter().ConvertFrom("#F2F2F2");
 
-            UpdateKeyVisuals(); 
+            UpdateKeyVisuals();
         }
 
         private void CapsLock_Click(object sender, RoutedEventArgs e)
@@ -266,9 +259,7 @@ namespace Keyboard
                 ? Brushes.LightBlue
                 : (Brush)new BrushConverter().ConvertFrom("#F2F2F2");
 
-            UpdateKeyVisuals(); 
+            UpdateKeyVisuals();
         }
-
-
     }
 }

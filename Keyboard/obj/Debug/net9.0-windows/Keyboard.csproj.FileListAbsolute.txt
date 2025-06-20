@@ -22,3 +22,5 @@ C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\refint\
 C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\Keyboard.pdb
 C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\Keyboard.genruntimeconfig.cache
 C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\ref\Keyboard.dll
+C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\Window2.baml
+C:\Users\Russell\source\repos\Keyboard\Keyboard\obj\Debug\net9.0-windows\Window2.g.cs

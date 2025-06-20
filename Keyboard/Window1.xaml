@@ -9,14 +9,14 @@
     Title="Keyboard"
     Width="1080"
     Height="300"
-    Background="White"
-    ResizeMode="NoResize"
-    WindowStyle="None"
-    Topmost="True"
-    ShowInTaskbar="False"
     AllowsTransparency="False"
-    mc:Ignorable="d"
-    Loaded="Window_Loaded">
+    Background="White"
+    Loaded="Window_Loaded"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    Topmost="True"
+    WindowStyle="None"
+    mc:Ignorable="d">
 
     <Window.Resources>
         <Style x:Key="KeyboardButtonStyle" TargetType="Button">
@@ -517,17 +517,17 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="80" />
                         <!--  Shift  -->
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="17*" />
+                        <ColumnDefinition Width="17*" />
+                        <ColumnDefinition Width="17*" />
+                        <ColumnDefinition Width="17*" />
+                        <ColumnDefinition Width="17*" />
+                        <ColumnDefinition Width="17*" />
+                        <ColumnDefinition Width="17*" />
+                        <ColumnDefinition Width="17*" />
+                        <ColumnDefinition Width="17*" />
+                        <ColumnDefinition Width="54" />
+                        <ColumnDefinition Width="20*" />
                     </Grid.ColumnDefinitions>
 
                     <Button

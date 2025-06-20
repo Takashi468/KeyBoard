@@ -12,24 +12,24 @@
     <Grid>
         <TextBox
             x:Name="TextBox_Username"
-            Height="144"
+            Height="150"
             Margin="10,145,10,145"
             Padding="60,0,20,0"
             HorizontalContentAlignment="Left"
             VerticalContentAlignment="Center"
             Panel.ZIndex="1"
             BorderThickness="0"
-            CaretBrush="{x:Null}"
+            CaretBrush="Black"
             FontSize="70"
             Foreground="Black"
             GotFocus="TextBox_Username_GotFocus"
             LostFocus="TextBox_Username_LostFocus"
             SelectionTextBrush="Red"
             Text="555"
-            TextAlignment="Left"
-            TextChanged="TextBox_Username_TextChanged">
+            TextAlignment="Left">
             <TextBox.SelectionBrush>
                 <SolidColorBrush Opacity="0.5" Color="#FFA7A7A7" />
+
             </TextBox.SelectionBrush>
         </TextBox>
     </Grid>
